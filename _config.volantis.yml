@@ -307,7 +307,7 @@ article:
 comments:
   title: <i class='fa-solid fa-comments'></i> 评论
   subtitle:
-  service: giscus
+  service: waline
   # 可选评论系统 #
 
   # artalk
@@ -453,8 +453,10 @@ comments:
     js: https://unpkg.com/@waline/client@v2/dist/waline.js
     css: https://unpkg.com/@waline/client@v2/dist/waline.css
     path: # 全局评论地址 目前设置全局评论地址后visitor失效,这是waline的问题
-    placeholder: # 评论占位提示
-    serverURL: # Waline 的服务端地址（必填） 测试用地址: https://waline.vercel.app
+    placeholder: 留下你的足迹吧 ~ # 评论占位提示
+    serverURL: # ★必填★ 部署到 Vercel 后把你的服务端地址填这里，如 https://xxx.vercel.app
+    meta: ['nick', 'mail', 'link'] # 访客评论需填写的字段：昵称/邮箱/网址
+    requiredMeta: ['nick'] # 昵称必填
     imageUploader:
       # 以兰空图床为例，下列填写内容为：
       # url: https://xxxxxx/api/v1/upload

@@ -34,7 +34,7 @@ categories: 操作系统
 
 为什么要隔开？**因为任何代码都可能出 bug，而 bug 在内堡里的后果是致命的。** 浏览器崩了，如果它住在内堡、能直接碰硬件，一崩就拖垮整台机器；隔开之后，它崩了就崩了，操作系统负责回收清理，别的程序照跑。这道墙的全部意义就是**隔离故障域**：内堡里的代码权力无限但必须绝对可靠，外圈的代码随便折腾、崩了也不影响大局。
 
-![内核态/用户态分层示意图|600](images/fuse-kernel-userspace.svg)
+![内核态/用户态分层示意图|600](/images/fuse-kernel-userspace.svg)
 
 这道墙是 CPU 在硅片层面物理保证的。x86 用"特权级（Ring）"实现：Ring 0 是内核模式，能执行任何指令；Ring 3 是用户模式，一大堆危险指令被硬件禁止。用户程序**无法**自己把档位从 Ring 3 改到 Ring 0——否则墙就形同虚设。升权只能从几个固定的"正门"发生，最典型的是**系统调用（system call）**：你的程序执行一条 `syscall` 指令，CPU **一气呵成地**做两件不可分割的事——把权限档位升到 Ring 0，**并强制跳转到内核早就设定好的入口地址**。换句话说，**升权的同一瞬间，执行权就已经交到了内核手里**，你没机会以 Ring 0 的身份跑自己的代码。
 
@@ -68,7 +68,7 @@ categories: 操作系统
 
 FUSE（Filesystem in Userspace）的核心用四个字总结：**劈成两半。** 内核里只留一个不含任何业务逻辑的"转发员"，真正的繁重工作全部交给一个普通的用户态进程去做。
 
-![FUSE 核心架构图|600](images/fuse-architecture.svg)
+![FUSE 核心架构图|600](/images/fuse-architecture.svg)
 
 ### 三个角色
 
@@ -97,7 +97,7 @@ FUSE（Filesystem in Userspace）的核心用四个字总结：**劈成两半。
 
 理解了架构，我们把同一次文件读取在两种文件系统里走一遍，体会 FUSE "劈分"的代价。
 
-![ext4 vs FUSE 读流程对比|600](images/fuse-read-flow.svg)
+![ext4 vs FUSE 读流程对比|600](/images/fuse-read-flow.svg)
 
 **普通 ext4：**
 

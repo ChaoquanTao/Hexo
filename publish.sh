@@ -38,6 +38,18 @@ for f in "$VAULT"/*.md; do
 done
 echo "✓ 已同步 $n 篇文章到 source/_posts（跳过 $skip 个草稿/笔记）"
 
+# 同步图片目录（vault/images -> source/images，做镜像）
+# 文章里用相对路径 images/xxx 引用，这里改写成站点绝对路径 /images/xxx，
+# 这样 Obsidian 本地预览（相对路径）和 Hexo 线上（绝对路径）都能正确显示。
+IMG_SRC="$VAULT/images"
+IMG_DST="$HERE/source/images"
+rm -rf "$IMG_DST"
+if [ -d "$IMG_SRC" ]; then
+  cp -R "$IMG_SRC" "$IMG_DST"
+  find "$POSTS" -name '*.md' -exec sed -i '' -E 's#\]\(images/#](/images/#g' {} +
+  echo "✓ 已同步图片 $(find "$IMG_DST" -type f | wc -l | tr -d ' ') 个 -> source/images/（文章 images/ 引用已改写为 /images/）"
+fi
+
 # --dry / --sync-only：只同步，不提交不推送
 case "${1:-}" in
   --dry | --sync-only)
@@ -47,7 +59,7 @@ case "${1:-}" in
 esac
 
 cd "$HERE"
-git add source/_posts
+git add -A source/_posts source/images 2>/dev/null || git add -A source/_posts
 if git diff --cached --quiet; then
   echo "内容无变化，无需发布。"
   exit 0
