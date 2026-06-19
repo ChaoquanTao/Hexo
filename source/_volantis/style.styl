@@ -39,3 +39,19 @@
     p:first-of-type
       font-size: 1rem
       margin-bottom: 4px
+
+// ===== 文章页侧栏「关注公众号」二维码 widget =====
+// 二维码图片放在 source/images/qrcode-mp.png，配置见 sidebar.widget_library.qrcode。
+// 加白底圆角，保证暗色模式下也能正常扫码；居中并限制宽度。
+.widget.qrcode
+  .content
+    text-align: center
+    img
+      width: 80%
+      max-width: 200px
+      height: auto
+      margin: 6px auto 0
+      padding: 8px
+      background: #fff
+      border-radius: 10px
+      box-shadow: 0 1px 8px rgba(0, 0, 0, .08)
