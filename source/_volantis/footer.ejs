@@ -1,0 +1,9 @@
+<!--
+  不蒜子(busuanzi)站点 PV/UV 计数器。
+  仅在页脚注入此脚本，给页脚 analytics 区块的 #busuanzi_value_site_pv / #busuanzi_value_site_uv 填值。
+  之所以不在 _config 的 analytics.busuanzi 里全局开启，是为了不影响文章页已有的 Waline 浏览量统计
+  （counter.ejs 的 if/elseif 会让 busuanzi 抢占 Waline），也避免与 footer 的 info 区块产生重复 id。
+  后端为 busuanzi.ibruce.info，按 Referer 绑定域名，仅在线上 https://singularities.cc 正常计数。
+  若该公共服务不稳定，可把下面的 src 换成同样兼容的 Vercount：https://cn.vercount.one/js
+-->
+<script defer src="https://cdn.jsdelivr.net/gh/volantis-x/cdn-busuanzi@2.3/js/busuanzi.pure.mini.js" data-pjax></script>
