@@ -48,7 +48,13 @@ if [ -d "$IMG_SRC" ]; then
   # 只拷贝 vault 图片（同名覆盖），不清空目录——保留 source/images 里手动管理的图
   # （如侧栏二维码 qrcode-mp.png）。注意：vault 里删掉的图不会自动从这里移除。
   cp -R "$IMG_SRC"/. "$IMG_DST"/
-  find "$POSTS" -name '*.md' -exec sed -i '' -E 's#\]\(images/#](/images/#g' {} +
+  # 改写 images/ 相对引用为站点绝对路径 /images/：
+  #   - Markdown 图片  ](images/...)        -> ](/images/...)
+  #   - HTML <img>     src="images/..."     -> src="/images/..."（含单/双引号）
+  # 注意必须用绝对路径，否则 https 线上页面里相对路径会按当前文章 URL 解析而 404。
+  find "$POSTS" -name '*.md' -exec sed -i '' -E \
+    -e 's#\]\(images/#](/images/#g' \
+    -e 's#(src=["'\''])images/#\1/images/#g' {} +
   echo "✓ 已同步图片 $(find "$IMG_SRC" -type f | wc -l | tr -d ' ') 个 -> source/images/（文章 images/ 引用已改写为 /images/）"
 fi
 
