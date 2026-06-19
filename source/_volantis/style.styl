@@ -1,0 +1,41 @@
+// ===== 公众号二维码（替换 blogger 侧边栏头像）=====
+// volantis 默认会把头像在移动端裁成 80px 圆形，二维码被裁圆角会扫不出来，
+// 这里统一覆盖为完整方形展示，并加白底以保证暗色模式下也能正常扫码。
+.widget.blogger
+  .content > .avatar
+    align-self: center
+    width: 72%
+    max-width: 200px
+    height: auto
+    margin: 20px auto 6px
+    padding: 8px
+    background: #fff
+    border-radius: 10px
+    overflow: visible
+    box-shadow: 0 1px 8px rgba(0, 0, 0, .08)
+    img
+      position: static
+      width: 100%
+      height: auto
+      display: block
+      transform: none
+    @media screen and (max-width: 768px)
+      width: 62%
+      max-width: 180px
+      height: auto
+      border: none
+      border-radius: 10px
+      img
+        position: static
+        transform: none
+
+  // 二维码下方的说明文字 + 每日诗词
+  .text
+    p
+      color: var(--color-meta)
+      font-size: .9rem
+      line-height: 1.55
+    // 第一段（关注公众号说明）稍微强调、放大一点
+    p:first-of-type
+      font-size: 1rem
+      margin-bottom: 4px

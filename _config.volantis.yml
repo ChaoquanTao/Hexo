@@ -493,11 +493,11 @@ sidebar:
     blogger:
       class: blogger
       display: [desktop, mobile] # [desktop, mobile]
-      avatar: http://cdn.inewbie.top/blog-meta/avatar.jpeg #volantis-static/media/org.volantis/blog/Logo-NavBar@3x.png # https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/blog/Logo-NavBar@3x.png
+      avatar: /images/qrcode-mp.png # 公众号二维码，图片放在 source/images/ 下
       shape: rectangle # circle, rectangle
-      url: /about/
+      url: # 留空：二维码作为纯图片展示，方便长按识别/保存
       title:
-      subtitle:
+      subtitle: '**关注公众号「奇点以内」**'
       jinrishici: true # Poetry Today. You can set a string, and it will be displayed when loading fails.
       social:
         - icon: fa-solid fa-rss
