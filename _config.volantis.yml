@@ -454,7 +454,7 @@ comments:
     css: https://unpkg.com/@waline/client@v2/dist/waline.css
     path: # 全局评论地址 目前设置全局评论地址后visitor失效,这是waline的问题
     placeholder: 留下你的足迹吧 ~ # 评论占位提示
-    serverURL: # ★必填★ 部署到 Vercel 后把你的服务端地址填这里，如 https://xxx.vercel.app
+    serverURL: https://blog-comment-pi-navy.vercel.app # Waline 服务端（Vercel + Neon 部署）
     meta: ['nick', 'mail', 'link'] # 访客评论需填写的字段：昵称/邮箱/网址
     requiredMeta: ['nick'] # 昵称必填
     imageUploader:
