@@ -19,7 +19,7 @@
   <a href="<%- url_for(path) %>#comments">
     <i class="<%- theme.article.body.meta_library.walinecount.icon %> fa-fw"></i>
     <p>
-      <span data-path="<%- url_for(path) %>" class="waline-comment-count">
+      <span data-path="<%- decodeURI(url_for(path)) %>" class="waline-comment-count">
         <i class="fa-solid fa-loader fa-spin fa-fw" aria-hidden="true"></i>
       </span> 
       <% if(theme.article.body.meta_library.walinecount.desc) { %> 

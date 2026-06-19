@@ -36,7 +36,7 @@
       <% } else if (theme.analytics.busuanzi) { %>
       <span id="busuanzi_value_page_pv"><i class="fa-solid fa-loader fa-spin fa-fw" aria-hidden="true"></i></span>
       <% } else if (theme.comments.service=='waline' && theme.comments.waline.pageview) { %>
-      <span data-path="<%- url_for(path) %>" class="waline-pageview-count">
+      <span data-path="<%- decodeURI(url_for(path)) %>" class="waline-pageview-count">
         <i class="fa-solid fa-loader fa-spin fa-fw" aria-hidden="true"></i>
       </span>
       <% } else if (theme.comments.service=='twikoo') { %>
