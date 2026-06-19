@@ -61,16 +61,12 @@ UMA 最大的好处是**对程序员透明**——不管几颗 CPU，写代码�
       <polygon points="0,0 7,3.5 0,7" fill="#c0392b"/>
     </marker>
   </defs>
-
   <!-- 背景 -->
   <rect width="640" height="300" fill="#fdfefe" rx="10" stroke="#e0e0e0" stroke-width="1"/>
-
   <!-- 标题 -->
   <text x="320" y="24" text-anchor="middle" font-size="13" fill="#555">一致性通知数量 = N×(N-1)/2，随 CPU 数量平方级增长</text>
-
   <!-- ===== 左面板：4颗CPU ===== -->
   <text x="150" y="52" text-anchor="middle" font-size="14" font-weight="bold" fill="#1a252f">4 颗 CPU</text>
-
   <!-- 6条一致性链路（虚线） -->
   <line x1="90" y1="110" x2="210" y2="110" stroke="#e74c3c" stroke-width="1.5" stroke-dasharray="5,3"/>
   <line x1="90" y1="110" x2="90" y2="210" stroke="#e74c3c" stroke-width="1.5" stroke-dasharray="5,3"/>
@@ -78,7 +74,6 @@ UMA 最大的好处是**对程序员透明**——不管几颗 CPU，写代码�
   <line x1="210" y1="110" x2="90" y2="210" stroke="#e74c3c" stroke-width="1.5" stroke-dasharray="5,3"/>
   <line x1="210" y1="110" x2="210" y2="210" stroke="#e74c3c" stroke-width="1.5" stroke-dasharray="5,3"/>
   <line x1="90" y1="210" x2="210" y2="210" stroke="#e74c3c" stroke-width="1.5" stroke-dasharray="5,3"/>
-
   <!-- 4颗CPU方块 -->
   <rect x="60" y="88" width="60" height="44" rx="6" fill="#2980b9"/>
   <text x="90" y="115" text-anchor="middle" font-size="12" fill="white" font-weight="bold">CPU 0</text>
@@ -88,22 +83,17 @@ UMA 最大的好处是**对程序员透明**——不管几颗 CPU，写代码�
   <text x="90" y="215" text-anchor="middle" font-size="12" fill="white" font-weight="bold">CPU 2</text>
   <rect x="180" y="188" width="60" height="44" rx="6" fill="#2980b9"/>
   <text x="210" y="215" text-anchor="middle" font-size="12" fill="white" font-weight="bold">CPU 3</text>
-
   <text x="150" y="260" text-anchor="middle" font-size="15" fill="#c0392b" font-weight="bold">6 条一致性链路</text>
   <text x="150" y="280" text-anchor="middle" font-size="11" fill="#888">总线压力：尚可接受</text>
-
   <!-- 分隔线 + 箭头 -->
   <line x1="318" y1="30" x2="318" y2="290" stroke="#ddd" stroke-width="1.5"/>
   <text x="318" y="162" text-anchor="middle" font-size="28" fill="#bbb" font-weight="bold">→</text>
-
   <!-- ===== 右面板：8颗CPU（圆形排列） ===== -->
   <text x="480" y="52" text-anchor="middle" font-size="14" font-weight="bold" fill="#1a252f">8 颗 CPU</text>
-
   <!-- 8颗CPU圆形排布，圆心(480,160)，半径78 -->
   <!-- 位置：
     CPU0: (558,160)  CPU1: (535,105)  CPU2: (480,82)   CPU3: (425,105)
     CPU4: (402,160)  CPU5: (425,215)  CPU6: (480,238)  CPU7: (535,215) -->
-
   <!-- 28条一致性链路（细线，半透明） -->
   <g stroke="#e74c3c" stroke-width="1" opacity="0.45" stroke-dasharray="4,2">
     <line x1="558" y1="160" x2="535" y2="105"/><line x1="558" y1="160" x2="480" y2="82"/>
@@ -123,7 +113,6 @@ UMA 最大的好处是**对程序员透明**——不管几颗 CPU，写代码�
     <line x1="425" y1="215" x2="480" y2="238"/><line x1="425" y1="215" x2="535" y2="215"/>
     <line x1="480" y1="238" x2="535" y2="215"/>
   </g>
-
   <!-- 8颗CPU圆形节点 -->
   <circle cx="558" cy="160" r="20" fill="#2980b9"/><text x="558" y="165" text-anchor="middle" font-size="10" fill="white" font-weight="bold">CPU0</text>
   <circle cx="535" cy="105" r="20" fill="#2980b9"/><text x="535" y="110" text-anchor="middle" font-size="10" fill="white" font-weight="bold">CPU1</text>
@@ -133,7 +122,6 @@ UMA 最大的好处是**对程序员透明**——不管几颗 CPU，写代码�
   <circle cx="425" cy="215" r="20" fill="#2980b9"/><text x="425" y="220" text-anchor="middle" font-size="10" fill="white" font-weight="bold">CPU5</text>
   <circle cx="480" cy="238" r="20" fill="#2980b9"/><text x="480" y="243" text-anchor="middle" font-size="10" fill="white" font-weight="bold">CPU6</text>
   <circle cx="535" cy="215" r="20" fill="#2980b9"/><text x="535" y="220" text-anchor="middle" font-size="10" fill="white" font-weight="bold">CPU7</text>
-
   <text x="480" y="270" text-anchor="middle" font-size="15" fill="#c0392b" font-weight="bold">28 条一致性链路</text>
   <text x="480" y="288" text-anchor="middle" font-size="11" fill="#888">总线被打满，CPU 在排队</text>
 </svg>
@@ -147,74 +135,57 @@ UMA 最大的好处是**对程序员透明**——不管几颗 CPU，写代码�
     <marker id="arrD" markerWidth="7" markerHeight="7" refX="3.5" refY="6" orient="auto"><polygon points="0,0 7,0 3.5,7" fill="#888"/></marker>
     <marker id="arrDr" markerWidth="7" markerHeight="7" refX="3.5" refY="6" orient="auto"><polygon points="0,0 7,0 3.5,7" fill="#c0392b"/></marker>
   </defs>
-
   <!-- 背景 -->
   <rect width="660" height="390" fill="#fdfefe" rx="10" stroke="#e0e0e0" stroke-width="1"/>
   <text x="330" y="24" text-anchor="middle" font-size="13" fill="#555">同一缓存行在两颗 CPU 之间反复失效与重载（"缓存行乒乓"）</text>
-
   <!-- ===== 时刻 1：双方都有有效缓存行 ===== -->
   <text x="20" y="58" font-size="11" fill="#888">时刻①</text>
-
   <!-- CPU A -->
   <rect x="40" y="65" width="110" height="44" rx="6" fill="#2980b9"/>
   <text x="95" y="84" text-anchor="middle" font-size="12" fill="white" font-weight="bold">CPU A</text>
   <text x="95" y="100" text-anchor="middle" font-size="10" fill="#aed6f1">缓存：✓ 有效</text>
-
   <!-- CPU B -->
   <rect x="510" y="65" width="110" height="44" rx="6" fill="#2980b9"/>
   <text x="565" y="84" text-anchor="middle" font-size="12" fill="white" font-weight="bold">CPU B</text>
   <text x="565" y="100" text-anchor="middle" font-size="10" fill="#aed6f1">缓存：✓ 有效</text>
-
   <!-- ===== 时刻 2：CPU A 写入，发出失效通知 ===== -->
   <text x="20" y="148" font-size="11" fill="#888">时刻②</text>
-
   <!-- CPU A 写入 -->
   <rect x="40" y="155" width="110" height="44" rx="6" fill="#1a5276"/>
   <text x="95" y="174" text-anchor="middle" font-size="12" fill="white" font-weight="bold">CPU A 写入</text>
   <text x="95" y="190" text-anchor="middle" font-size="10" fill="#aed6f1">缓存：已修改</text>
-
   <!-- 失效通知箭头 -->
   <line x1="155" y1="177" x2="505" y2="177" stroke="#c0392b" stroke-width="1.8" stroke-dasharray="6,3" marker-end="url(#arrR)"/>
   <text x="330" y="170" text-anchor="middle" font-size="11" fill="#c0392b" font-weight="bold">发出失效通知（Invalidate）</text>
-
   <!-- CPU B 失效 -->
   <rect x="510" y="155" width="110" height="44" rx="6" fill="#922b21"/>
   <text x="565" y="174" text-anchor="middle" font-size="12" fill="white" font-weight="bold">CPU B</text>
   <text x="565" y="190" text-anchor="middle" font-size="10" fill="#f1948a">缓存：✗ 已失效</text>
-
   <!-- ===== 时刻 3：CPU B 读取，发生 cache miss ===== -->
   <text x="20" y="238" font-size="11" fill="#888">时刻③</text>
-
   <!-- CPU A 不变 -->
   <rect x="40" y="245" width="110" height="44" rx="6" fill="#1a5276"/>
   <text x="95" y="264" text-anchor="middle" font-size="12" fill="white" font-weight="bold">CPU A</text>
   <text x="95" y="280" text-anchor="middle" font-size="10" fill="#aed6f1">缓存：有效</text>
-
   <!-- CPU B 读取 miss -->
   <rect x="510" y="245" width="110" height="44" rx="6" fill="#784212"/>
   <text x="565" y="264" text-anchor="middle" font-size="12" fill="white" font-weight="bold">CPU B 读取</text>
   <text x="565" y="280" text-anchor="middle" font-size="10" fill="#f0b27a">Cache Miss！</text>
-
   <!-- 向下取内存的箭头（CPU B → 内存） -->
   <line x1="565" y1="289" x2="565" y2="318" stroke="#c0392b" stroke-width="1.8" marker-end="url(#arrDr)"/>
-
   <!-- 内存 -->
   <rect x="440" y="318" width="230" height="40" rx="6" fill="#1e8449"/>
   <text x="555" y="340" text-anchor="middle" font-size="12" fill="white" font-weight="bold">主内存（~100 ns 往返）</text>
-
   <!-- 慢！标注 -->
   <text x="595" y="308" font-size="12" fill="#c0392b" font-weight="bold">慢！</text>
-
   <!-- ===== 循环箭头（右边绕回顶部） ===== -->
   <path d="M 625 340 Q 648 340 648 200 Q 648 65 620 87" fill="none" stroke="#bbb" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arrL)"/>
   <text x="651" y="205" font-size="10" fill="#aaa" transform="rotate(90,651,205)">反复乒乓…</text>
-
   <!-- 左侧说明 -->
   <line x1="95" y1="109" x2="95" y2="152" stroke="#555" stroke-width="1" stroke-dasharray="3,2" marker-end="url(#arrD)"/>
   <line x1="565" y1="109" x2="565" y2="152" stroke="#555" stroke-width="1" stroke-dasharray="3,2" marker-end="url(#arrD)"/>
   <line x1="95" y1="199" x2="95" y2="242" stroke="#555" stroke-width="1" stroke-dasharray="3,2" marker-end="url(#arrD)"/>
   <line x1="565" y1="199" x2="565" y2="242" stroke="#555" stroke-width="1" stroke-dasharray="3,2" marker-end="url(#arrD)"/>
-
   <text x="330" y="376" text-anchor="middle" font-size="11" fill="#888">每次乒乓 = 一次 cache miss + 一次内存往返，性能瞬间跌入"慢路径"</text>
 </svg>
 
@@ -236,99 +207,78 @@ UMA 最大的好处是**对程序员透明**——不管几颗 CPU，写代码�
     <marker id="cr" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><polygon points="0,0 7,3.5 0,7" fill="#c0392b"/></marker>
     <marker id="cl" markerWidth="7" markerHeight="7" refX="1" refY="3.5" orient="auto"><polygon points="7,0 0,3.5 7,7" fill="#c0392b"/></marker>
   </defs>
-
   <!-- ===== NUMA Node 0 ===== -->
   <rect x="5" y="20" width="345" height="380" rx="10" fill="#eaf4fb" stroke="#2980b9" stroke-width="2"/>
   <text x="177" y="46" text-anchor="middle" font-size="15" font-weight="bold" fill="#1a5276">NUMA Node 0</text>
-
   <!-- 4 CPU Cores -->
   <rect x="18"  y="58" width="70" height="62" rx="6" fill="#2980b9"/>
   <text x="53"  y="80" text-anchor="middle" font-size="11" fill="white" font-weight="bold">Core 0</text>
   <text x="53"  y="96" text-anchor="middle" font-size="9"  fill="#aed6f1">L1 Cache</text>
   <text x="53"  y="110" text-anchor="middle" font-size="9" fill="#aed6f1">L2 Cache</text>
-
   <rect x="100" y="58" width="70" height="62" rx="6" fill="#2980b9"/>
   <text x="135" y="80" text-anchor="middle" font-size="11" fill="white" font-weight="bold">Core 1</text>
   <text x="135" y="96" text-anchor="middle" font-size="9"  fill="#aed6f1">L1 Cache</text>
   <text x="135" y="110" text-anchor="middle" font-size="9" fill="#aed6f1">L2 Cache</text>
-
   <rect x="182" y="58" width="70" height="62" rx="6" fill="#2980b9"/>
   <text x="217" y="80" text-anchor="middle" font-size="11" fill="white" font-weight="bold">Core 2</text>
   <text x="217" y="96" text-anchor="middle" font-size="9"  fill="#aed6f1">L1 Cache</text>
   <text x="217" y="110" text-anchor="middle" font-size="9" fill="#aed6f1">L2 Cache</text>
-
   <rect x="264" y="58" width="70" height="62" rx="6" fill="#2980b9"/>
   <text x="299" y="80" text-anchor="middle" font-size="11" fill="white" font-weight="bold">Core 3</text>
   <text x="299" y="96" text-anchor="middle" font-size="9"  fill="#aed6f1">L1 Cache</text>
   <text x="299" y="110" text-anchor="middle" font-size="9" fill="#aed6f1">L2 Cache</text>
-
   <line x1="53"  y1="120" x2="53"  y2="143" stroke="#555" stroke-width="1.5" marker-end="url(#dn)"/>
   <line x1="135" y1="120" x2="135" y2="143" stroke="#555" stroke-width="1.5" marker-end="url(#dn)"/>
   <line x1="217" y1="120" x2="217" y2="143" stroke="#555" stroke-width="1.5" marker-end="url(#dn)"/>
   <line x1="299" y1="120" x2="299" y2="143" stroke="#555" stroke-width="1.5" marker-end="url(#dn)"/>
-
   <!-- L3 Cache -->
   <rect x="18" y="143" width="316" height="40" rx="6" fill="#1a5276"/>
   <text x="176" y="168" text-anchor="middle" font-size="12" fill="white" font-weight="bold">L3 Cache（Node 内共享）</text>
   <line x1="176" y1="183" x2="176" y2="205" stroke="#555" stroke-width="1.5" marker-end="url(#dn)"/>
-
   <!-- IMC -->
   <rect x="18" y="205" width="316" height="40" rx="6" fill="#117a65"/>
   <text x="176" y="230" text-anchor="middle" font-size="12" fill="white" font-weight="bold">内存控制器（IMC）</text>
   <line x1="176" y1="245" x2="176" y2="267" stroke="#555" stroke-width="1.5" marker-end="url(#dn)"/>
-
   <!-- DDR -->
   <rect x="18" y="267" width="316" height="60" rx="6" fill="#1e8449"/>
   <text x="176" y="292" text-anchor="middle" font-size="12" fill="white" font-weight="bold">本地内存（DDR）</text>
   <text x="176" y="313" text-anchor="middle" font-size="10" fill="#a9dfbf">延迟 ~80 ns　｜　带宽 100%</text>
-
   <text x="176" y="355" text-anchor="middle" font-size="12" fill="#1e8449" font-weight="bold">✓ 本地访问（快）</text>
   <text x="176" y="374" text-anchor="middle" font-size="10" fill="#555">进程绑定在同一 Node 内时走此路径</text>
-
   <!-- ===== NUMA Node 1 ===== -->
   <rect x="430" y="20" width="345" height="380" rx="10" fill="#eaf4fb" stroke="#2980b9" stroke-width="2"/>
   <text x="602" y="46" text-anchor="middle" font-size="15" font-weight="bold" fill="#1a5276">NUMA Node 1</text>
-
   <rect x="443" y="58" width="70" height="62" rx="6" fill="#2980b9"/>
   <text x="478" y="80" text-anchor="middle" font-size="11" fill="white" font-weight="bold">Core 0</text>
   <text x="478" y="96" text-anchor="middle" font-size="9"  fill="#aed6f1">L1 Cache</text>
   <text x="478" y="110" text-anchor="middle" font-size="9" fill="#aed6f1">L2 Cache</text>
-
   <rect x="525" y="58" width="70" height="62" rx="6" fill="#2980b9"/>
   <text x="560" y="80" text-anchor="middle" font-size="11" fill="white" font-weight="bold">Core 1</text>
   <text x="560" y="96" text-anchor="middle" font-size="9"  fill="#aed6f1">L1 Cache</text>
   <text x="560" y="110" text-anchor="middle" font-size="9" fill="#aed6f1">L2 Cache</text>
-
   <rect x="607" y="58" width="70" height="62" rx="6" fill="#2980b9"/>
   <text x="642" y="80" text-anchor="middle" font-size="11" fill="white" font-weight="bold">Core 2</text>
   <text x="642" y="96" text-anchor="middle" font-size="9"  fill="#aed6f1">L1 Cache</text>
   <text x="642" y="110" text-anchor="middle" font-size="9" fill="#aed6f1">L2 Cache</text>
-
   <rect x="689" y="58" width="70" height="62" rx="6" fill="#2980b9"/>
   <text x="724" y="80" text-anchor="middle" font-size="11" fill="white" font-weight="bold">Core 3</text>
   <text x="724" y="96" text-anchor="middle" font-size="9"  fill="#aed6f1">L1 Cache</text>
   <text x="724" y="110" text-anchor="middle" font-size="9" fill="#aed6f1">L2 Cache</text>
-
   <line x1="478" y1="120" x2="478" y2="143" stroke="#555" stroke-width="1.5" marker-end="url(#dn)"/>
   <line x1="560" y1="120" x2="560" y2="143" stroke="#555" stroke-width="1.5" marker-end="url(#dn)"/>
   <line x1="642" y1="120" x2="642" y2="143" stroke="#555" stroke-width="1.5" marker-end="url(#dn)"/>
   <line x1="724" y1="120" x2="724" y2="143" stroke="#555" stroke-width="1.5" marker-end="url(#dn)"/>
-
   <rect x="443" y="143" width="316" height="40" rx="6" fill="#1a5276"/>
   <text x="601" y="168" text-anchor="middle" font-size="12" fill="white" font-weight="bold">L3 Cache（Node 内共享）</text>
   <line x1="601" y1="183" x2="601" y2="205" stroke="#555" stroke-width="1.5" marker-end="url(#dn)"/>
-
   <rect x="443" y="205" width="316" height="40" rx="6" fill="#117a65"/>
   <text x="601" y="230" text-anchor="middle" font-size="12" fill="white" font-weight="bold">内存控制器（IMC）</text>
   <line x1="601" y1="245" x2="601" y2="267" stroke="#555" stroke-width="1.5" marker-end="url(#dn)"/>
-
   <rect x="443" y="267" width="316" height="60" rx="6" fill="#1e8449"/>
   <text x="601" y="292" text-anchor="middle" font-size="12" fill="white" font-weight="bold">本地内存（DDR）</text>
   <text x="601" y="313" text-anchor="middle" font-size="10" fill="#a9dfbf">延迟 ~80 ns　｜　带宽 100%</text>
-
   <text x="601" y="355" text-anchor="middle" font-size="12" fill="#1e8449" font-weight="bold">✓ 本地访问（快）</text>
   <text x="601" y="374" text-anchor="middle" font-size="10" fill="#555">进程绑定在同一 Node 内时走此路径</text>
-
   <!-- ===== 跨节点互联 ===== -->
   <line x1="334" y1="225" x2="430" y2="225" stroke="#c0392b" stroke-width="3" marker-end="url(#cr)" marker-start="url(#cl)"/>
   <rect x="334" y="245" width="96" height="68" rx="6" fill="#fadbd8" stroke="#e74c3c" stroke-width="1"/>
