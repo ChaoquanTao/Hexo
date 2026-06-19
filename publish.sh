@@ -67,11 +67,13 @@ case "${1:-}" in
 esac
 
 cd "$HERE"
-git add -A source/_posts source/images 2>/dev/null || git add -A source/_posts
+# 提交全部站点改动：vault 同步来的文章/图片 + 主题配置、自定义样式/视图等手动改动。
+# .gitignore 已排除 public/、node_modules/、db.json、*.log 等构建产物，故 git add -A 是安全的。
+git add -A
 if git diff --cached --quiet; then
   echo "内容无变化，无需发布。"
   exit 0
 fi
-git commit -m "posts: 同步自 vault ($(date '+%Y-%m-%d %H:%M'))"
+git commit -m "publish: 同步内容与配置 ($(date '+%Y-%m-%d %H:%M'))"
 git push origin main
 echo "✓ 已推送，Cloudflare 将自动重新部署。"
