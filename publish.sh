@@ -67,10 +67,9 @@ case "${1:-}" in
 esac
 
 cd "$HERE"
-# 增量暂存站点改动：vault 同步来的文章/图片，以及主题配置、自定义样式/视图等手动改动。
-# 只列站点相关路径，避免误提交其它临时改动；如需发布 themes/、wrangler.jsonc 等其它文件请手动 git add。
-git add source/_posts source/images source/_volantis \
-        _config.yml _config.hexo-theme-volantis.yml _config.volantis.yml 2>/dev/null || true
+# 提交全部站点改动：vault 同步来的文章/图片 + 主题配置、自定义样式/视图等手动改动。
+# .gitignore 已排除 public/、node_modules/、db.json、*.log 等构建产物，故 git add -A 是安全的。
+git add -A
 if git diff --cached --quiet; then
   echo "内容无变化，无需发布。"
   exit 0
