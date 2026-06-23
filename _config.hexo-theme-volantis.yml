@@ -1242,9 +1242,12 @@ custom_css:
       weight: normal
       style: normal
     bodyfont:
-      fontfamily: 'UbuntuMono, "Varela Round", "PingFang SC", "Microsoft YaHei", Helvetica, Arial'
-      name: 'UbuntuMono'
-      url: volantis-static/media/fonts/UbuntuMono/UbuntuMono-Regular.ttf # https://cdn.jsdelivr.net/gh/volantis-x/cdn-fonts/UbuntuMono/UbuntuMono-Regular.ttf
+      # 系统原生字体栈：macOS/iOS=San Francisco，Windows=Segoe UI，中文=苹方/微软雅黑。
+      # 无需下载 web 字体，加载快。原值是等宽字体 UbuntuMono，会把正文英文/数字渲染成打字机字体。
+      fontfamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif'
+      # name/url 留空 → 不生成 @font-face，不再下载 UbuntuMono。
+      name:
+      url:
       weight: normal
       style: normal
     codefont:
