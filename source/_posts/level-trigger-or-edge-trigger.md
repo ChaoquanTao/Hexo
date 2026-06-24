@@ -27,7 +27,7 @@ tags:
 
 这组概念后来被借用到了各种软件系统里。最为 Linux 工程师熟悉的，就是 `epoll` 的两种模式：`EPOLLET`（edge-triggered）只在"有新数据到达"的那一刻通知你一次，你要是没一次读干净，剩下的数据它不会再提醒；而默认的 level-triggered 模式只要缓冲区里"还有数据没读完"就会一直通知你。
 
-抛开电路和 `epoll`，我们用一个更生活化的比喻把这两种哲学的差别钉死。假设你要看护一个水箱，**不让它溢出**：
+抛开电路和 `epoll`，我们用一个更生活化的比喻把这两种哲学的差别讲透。假设你要看护一个水箱，**不让它溢出**：
 
 - **edge-triggered 的做法**：在警戒线上装一个传感器，水面**越过警戒线的那一瞬间**给你发一个信号。你收到信号，就跑过去放水。
 - **level-triggered 的做法**：你不装传感器，而是每隔一段时间走过去**看一眼**——"现在水位是不是高于警戒线了？高了就放水，没高就走人。"
@@ -56,7 +56,7 @@ edge-triggered 看起来更"高级"也更省事——不用反复巡检，有事
 监听 "Pod 删除" 事件  →  收到后重建一个 Pod
 ```
 
-这段逻辑在 demo 里跑得很好。但只要你的服务重启一次，恰好错过了某个 Pod 的删除事件，这个 Pod 就**永远不会被重建**了。没有报错，没有崩溃，系统只是悄无声息地少了一个副本，直到某天有人发现容量不对。更隐蔽的是它**难以复现**——本地测不出来，因为本地不会恰好在那个时刻重启。
+这段逻辑在 demo 里跑得很好。但只要你的接收服务重启一次，恰好错过了某个 Pod 的删除事件，这个 Pod 就**永远不会被重建**了。没有报错，没有崩溃，系统只是悄无声息地少了一个副本，直到某天有人发现容量不对。更隐蔽的是它**难以复现**——本地测不出来，因为本地不会恰好在那个时刻重启。
 
 用一张时间线把两者在"信号丢失"时的命运对比一下：
 
@@ -78,7 +78,7 @@ edge-triggered 看起来更"高级"也更省事——不用反复巡检，有事
 
 > 它根本不在乎"刚才发生了什么事件"。它每一轮都**重新观察当前的全量状态，重新计算现在该做什么**。漏掉一万个事件都没关系——只要它再巡检一轮，看到"水位还是高的"，就会再放一次水。
 
-代价当然是有的：你得**不停地巡检**，哪怕大多数时候啥事没有，这是一种"轮询税"。但换来的是一个无比珍贵的性质——**系统能从任意错误状态中自愈**。漏了事件？下一轮纠正。进程重启了？起来重新看一遍全量，该补的补、该删的删。状态读错了？下一轮再读一次就对了。
+代价当然是有的：你得**不停地巡检**，哪怕大多数时候啥事没有，这是一种"轮询的代价"。但换来的是一个无比珍贵的性质——**系统能从任意错误状态中自愈**。漏了事件？下一轮纠正。进程重启了？起来重新看一遍全量，该补的补、该删的删。状态读错了？下一轮再读一次就对了。
 
 这就是为什么，**任何一个需要在不可靠环境里保证最终正确的控制系统，最终都会收敛到 level-triggered 上**。这不是品味问题，而是在一个会丢事件、会重启的世界里，唯一能站得住脚的选择。
 
@@ -108,7 +108,7 @@ Kubernetes 里跑着几十个这样的循环，各管一摊：Deployment control
 
 很多人第一反应是：controller 明明靠 watch 监听对象变化来工作，那它不就是 edge-triggered 吗？
 
-答案是：**watch 事件只是一个性能优化，不是决策依据。** 它的作用仅仅是敲一下你的肩膀："嘿，`default/my-app` 这个对象可能变了，你该去看一眼了。" controller 收到这个提醒后，**并不去处理这个事件**，而是拿着对象的名字**重新读取它当前的完整状态，重新调谐一遍**。事件丢了也没关系，因为还有**定期的全量重新同步（resync）**在背后兜底——每隔一段时间，所有对象都会被重新过一遍。（严格说，watch 基于 resourceVersion 续传本身就相当可靠，resync 更像一道纵深防御，而非主要的补漏手段；但"决策不依赖单个事件"这个心智模型依然成立。）
+答案是：**watch 事件只是一个性能优化，不是决策依据。** 它的作用仅仅是敲一下你的肩膀："嘿，`default/my-app` 这个对象可能变了，你该去看一眼了。" controller 收到这个提醒后，**并不去处理这个事件**，而是拿着对象的名字**重新读取它当前的完整状态，重新调谐一遍**。事件丢了也没关系，因为还有**定期的全量重新同步（resync）**在背后兜底——每隔一段时间，所有对象都会被重新过一遍。
 
 ```
    watch 事件   →  只用来"提醒该看了"   →  绝不用来"告诉你发生了什么"
@@ -119,7 +119,7 @@ Kubernetes 里跑着几十个这样的循环，各管一摊：Deployment control
 
 ## 四、范式落地：七个要点
 
-下面我们把挂在这条主梁上的七个要点一个一个拆开看——Reconcile、幂等、Informer/Cache、WorkQueue、OwnerReference、Finalizer、Status/Conditions。你会发现，**每一个要么是这条范式逼出来的硬约束，要么是 Kubernetes 为了让你更容易遵守它而提供的便利**。
+下面我们把挂在这条主线上的七个要点一个一个拆开看——Reconcile、幂等、Informer/Cache、WorkQueue、OwnerReference、Finalizer、Status/Conditions。你会发现，**每一个要么是这条范式逼出来的硬约束，要么是 Kubernetes 为了让你更容易遵守它而提供的便利**。
 
 ### Reconcile：为什么它只接收一个 key
 
@@ -156,15 +156,15 @@ type Request struct {
 
 level-triggered 还会顺手逼出另一条铁律。
 
+> **幂等（idempotency）：同一段逻辑，对同一个状态，跑 1 次和跑 100 次，结果必须完全一致。**
+
 既然 controller 每一轮都重新观察、重新执行，那么**同一个对象的 reconcile 逻辑，会被反复地、不确定次数地执行**:
 
 - 集群风平浪静时，它可能因为定期 resync 每 10 分钟跑一次；
 - 状态频繁变化时，它可能 1 秒内被触发好几次；
 - 它崩溃重启后，会把所有对象从头 reconcile 一遍。
 
-如果你的逻辑写成"每跑一次就创建一个 Pod"，那 100 次 reconcile 就会创建 100 个 Pod——灾难。所以必然要求：
-
-> **幂等（idempotency）：同一段逻辑，对同一个状态，跑 1 次和跑 100 次，结果必须完全一致。**
+如果你的逻辑写成"每跑一次就创建一个 Pod"，那 100 次 reconcile 就会创建 100 个 Pod——灾难。所以必然要求幂等。
 
 幂等的写法不是"创建一个 Pod"，而是"**确保（ensure）**存在一个符合期望的 Pod":
 
@@ -178,9 +178,23 @@ level-triggered 还会顺手逼出另一条铁律。
 
 ### Informer / Cache：每轮都读全量，API Server 受得了吗
 
+在往下讲之前，先花一句话交代 **API Server** 是什么——后面会反复提到它。它是整个集群**唯一的入口**：集群里所有对象（Pod、Deployment、你的 Foo……）都存在一个叫 **etcd** 的数据库里，而**谁都不能直接碰 etcd**，所有的读和写都必须经过 API Server 这道门。你敲的 `kubectl`、每个节点上的 kubelet、还有我们正在讲的 controller，全都是它的客户端。
+
+```
+       kubectl ──┐
+                 │
+   controller ──┼──►  ┌────────────┐  ──►  ┌────────┐
+                 │     │ API Server │       │  etcd  │  ← 真正存数据的地方
+      kubelet ──┘     └────────────┘  ◄──  └────────┘
+                       (唯一入口/门卫)
+        所有读写都得走这道门,etcd 不对外直接开放
+```
+
+正因为它是**唯一入口**，所有流量都压在它身上——这就是下面这个问题的由来。
+
 第三节说，controller 每轮都要"重新观察当前全量状态"。最朴素的实现是：每次 reconcile 都向 API Server 发一个 GET/LIST。
 
-但这里有个致命问题：**API Server 扛不住。** 集群里几十个 controller、成千上万个对象，如果每次 reconcile、每次 resync 都去打 API Server，它会被读请求活活淹死。
+但这里有个致命问题：**API Server 扛不住。** 集群里几十个 controller、成千上万个对象，如果每次 reconcile、每次 resync 都去打 API Server，它会被读请求压垮。
 
 解决方案是 **Informer**（背后是一个本地 **Cache / 缓存**）。机制是经典的 **List + Watch**:
 
@@ -209,13 +223,15 @@ level-triggered 还会顺手逼出另一条铁律。
 
 ### WorkQueue：把"惊群"压平
 
+先解释下标题里的**惊群（thundering herd）**：它原指"一件事发生时，一大群原本在等待的对象**同时被惊动、一拥而上**"——就像往鸽群里扔一块面包，所有鸽子哗地一下全飞过来抢，场面瞬间失控。放到 controller 这里，典型场景有两类：一是**某一个对象在极短时间内被改了几十次**，每次变化都想触发一次 reconcile；二是 controller **刚启动或刚重连**时，缓存里成千上万个对象"看起来全都变了"，瞬间涌出海量待处理任务。如果来一个就立刻处理一个，worker 和 API Server 会被这股洪峰冲垮。
+
 Informer 收到变化后，并不直接调用 `Reconcile`，而是先把对象的 key 塞进一个 **WorkQueue（工作队列）**，再由 worker 协程从队列里取 key 来处理。中间隔这一层队列，是为了三件事——而这三件事，**只有 level-triggered 才敢这么干**:
 
 1. **去重（dedup）。** 同一个对象短时间内变了 50 次，不会触发 50 次 reconcile。队列内部维护了一个 dirty 集合：某个 key 正在被处理时，新事件只把它**标记为 dirty**，等处理完再重新入队跑一轮。最终 50 次变化可能只合并成两三次 reconcile，每次都读当前最新状态。敢这么合并，正是因为 level-triggered **根本不关心那 50 个事件分别是什么**，只关心当前状态——合并完全没有信息损失。
 
-2. **限速（rate limiting）。** 队列能控制 reconcile 的速率，防止某个疯狂抖动的对象把 worker 和 API Server 打爆。
+2. **限速（rate limiting）。** 队列能控制 reconcile 的速率，防止某个频繁抖动的对象把 worker 和 API Server 压垮。
 
-3. **失败重试 + 指数退避（exponential backoff）。** reconcile 返回 error 时，框架把这个 key **重新入队**，且退避时间逐次翻倍（1s → 2s → 4s → …）。既保证"出错的对象最终会被重试到成功"，又不会在它持续失败时把 API Server 打爆。
+3. **失败重试 + 指数退避（exponential backoff）。** reconcile 返回 error 时，框架把这个 key **重新入队**，且退避时间逐次翻倍（1s → 2s → 4s → …）。既保证"出错的对象最终会被重试到成功"，又不会在它持续失败时把 API Server 拖垮。
 
 这就是为什么你的 `Reconcile` **只要"返回 error"就行**——剩下的重试、退避、去重，框架全替你兜住了。你只管把"当前该把状态调谐成什么样"这件事写对、写幂等。
 
@@ -241,7 +257,7 @@ OwnerReference 的级联 GC 能帮你回收**集群内**的子资源。但如果
 - 在某个外部数据库里建了一条记录；
 - 在对象存储里建了一个 bucket。
 
-用户删掉你的对象时，Kubernetes 的 GC 管不到这些外部资源。如果对象"啪"地一下从 etcd 消失，你就**再也没机会**去释放它们了——它们会变成泄漏的孤儿。
+用户删掉你的对象时，Kubernetes 的 GC 管不到这些外部资源。如果对象一下子从 etcd 消失，你就**再也没机会**去释放它们了——它们会变成泄漏的孤儿。
 
 **Finalizer（终结器）** 就是为此而生的一道"临终清理"钩子：
 
@@ -264,7 +280,7 @@ OwnerReference 的级联 GC 能帮你回收**集群内**的子资源。但如果
 **这是 controller 里最容易出 bug 的地方，** 而原因还是那两条铁律：
 
 - **清理必须幂等。** reconcile 可能在"清理外部资源"和"移除 finalizer"之间崩溃重启，重启后又会重进清理逻辑。所以"释放外部资源"必须能安全地跑第二次。
-- **对 NotFound 宽容。** 如果要删的外部资源"本来就不存在了"（上次可能已经删过），不能当成错误。否则 reconcile 永远返回 error、finalizer 永远移不掉，对象**永远卡在 Terminating**，用户会抓狂。正确写法是："删，如果返回 NotFound，当作成功。"
+- **对 NotFound 宽容。** 如果要删的外部资源"本来就不存在了"（上次可能已经删过），不能当成错误。否则 reconcile 永远返回 error、finalizer 永远移不掉，对象**永远卡在 Terminating**，让用户非常头疼。正确写法是："删，如果返回 NotFound，当作成功。"
 
 一句话：**finalizer 的清理逻辑，要写得像 reconcile 主干一样——假设自己会被重复调用，假设资源可能已经不在了。**
 
@@ -286,7 +302,33 @@ OwnerReference 的级联 GC 能帮你回收**集群内**的子资源。但如果
    用户 ◄─读── status   (actual,现在实际怎么样)
 ```
 
-落到开发上有三个要点：
+光说有点抽象，看一个真实对象长什么样（`kubectl get foo my-app -o yaml` 的节选）：
+
+```yaml
+apiVersion: example.com/v1
+kind: Foo
+metadata:
+  name: my-app
+  generation: 2            # 用户每改一次 spec,这个数 +1(这里改过 2 次)
+spec:                      # ── 用户写的"我想要什么" ──
+  replicas: 3
+  image: nginx:1.27
+status:                    # ── controller 写的"现在实际怎么样" ──
+  observedGeneration: 2    # controller 已处理到 generation=2,说明 status 是最新的
+  conditions:
+  - type: Ready            # 这个 Condition 表达"整体是否就绪"
+    status: "True"         #   True / False / Unknown
+    reason: AllReplicasReady
+    message: "3/3 replicas are available"
+    lastTransitionTime: "2026-06-22T03:14:00Z"
+  - type: Progressing
+    status: "False"
+    reason: ReconcileComplete
+    message: "Deployment has settled, no rollout in progress"
+    lastTransitionTime: "2026-06-22T03:14:00Z"
+```
+
+对着这个例子看下面三个要点，会清楚很多：
 
 **其一，status 是对外的单一事实源（single source of truth）。** 别人（用户、其他系统、`kubectl get`）想知道"这对象现在怎么样了"，只看 status。常用 **Conditions（条件）** 这种结构化方式表达——每个 Condition 有 `type`（如 `Ready`)、`status`(`True`/`False`/`Unknown`)、`reason`、`message`，组合起来表达健康状况和进度。
 
