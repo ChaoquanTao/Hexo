@@ -7,7 +7,7 @@ info:
 debug: env # false: 关闭调试模式， env：环境配置检查， pjax：调试pjax，rightMenus: 调试右键
 ############################### 默认占位图 ###############################
 default:
-  avatar: http://cdn.inewbie.top/blog-meta/avatar.jpeg #volantis-static/media/placeholder/avatar/round/3442075.svg # https://cdn.jsdelivr.net/gh/cdn-x/placeholder@1.0.1/avatar/round/3442075.svg
+  avatar: /images/avatar.jpeg #volantis-static/media/placeholder/avatar/round/3442075.svg # https://cdn.jsdelivr.net/gh/cdn-x/placeholder@1.0.1/avatar/round/3442075.svg
   link: volantis-static/media/placeholder/link/8f277b4ee0ecd.svg # https://cdn.jsdelivr.net/gh/cdn-x/placeholder@1.0.1/link/8f277b4ee0ecd.svg
   cover: volantis-static/media/placeholder/cover/76b86c0226ffd.svg # https://cdn.jsdelivr.net/gh/cdn-x/placeholder@1.0.1/cover/76b86c0226ffd.svg
   image: volantis-static/media/placeholder/image/2659360.svg # https://cdn.jsdelivr.net/gh/cdn-x/placeholder@1.0.1/image/2659360.svg
@@ -83,7 +83,7 @@ scroll_smooth: true
 navbar:
   visiable: auto # always, auto
   logo: # choose [img] or [icon + title]
-    img: http://cdn.inewbie.top/blog-meta/avatar.jpeg #volantis-static/media/org.volantis/blog/Logo-NavBar@3x.png # https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/blog/Logo-NavBar@3x.png
+    img: /images/avatar.jpeg #volantis-static/media/org.volantis/blog/Logo-NavBar@3x.png # https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/blog/Logo-NavBar@3x.png
     icon:
     title:
   menu:
@@ -116,7 +116,7 @@ cover:
     others: false # can be written in front-matter 'cover: true'
   #background:  http://cdn.inewbie.top/blog-meta/avatar.jpeg # http://cdn.inewbie.top/blog-meta/background.jpeg # https://gcore.jsdelivr.net/gh/MHG-LAB/cron@gh-pages/bing/bing.jpg
   #background: https://pixabay.com/zh/photos/night-sky-stars-snow-trees-night-7733876 #https://api.dujin.org/bing/1920.php # https://bing.ioliu.cn/v1/rand?w=1920&h=1200
-  logo: http://cdn.inewbie.top/blog-meta/avatar.jpeg # http://tva1.sinaimg.cn/large/006ImZ0Ogy1h1u8d5drhbj307f059mxz.jpg# https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/blog/Logo-Cover@3x.png #https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/blog/Logo-Cover@3x.png
+  logo: /images/avatar.jpeg # http://tva1.sinaimg.cn/large/006ImZ0Ogy1h1u8d5drhbj307f059mxz.jpg# https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/blog/Logo-Cover@3x.png #https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/blog/Logo-Cover@3x.png
   title: 'Tau的博客'
   subtitle: ''
   search: # A Wonderful Theme for Hexo # search bar placeholder
@@ -253,7 +253,7 @@ article:
       # 默认文章作者（可在 _data/author.yaml 中增加其他作者，并在 front-matter 中设置）
       # https://volantis.js.org/advanced-settings/#多人协同
       author:
-        avatar: http://cdn.inewbie.top/blog-meta/avatar.jpeg #volantis-static/media/org.volantis/blog/favicon/apple-touch-icon.png # https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/blog/favicon/apple-touch-icon.png
+        avatar: /images/avatar.jpeg #volantis-static/media/org.volantis/blog/favicon/apple-touch-icon.png # https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/blog/favicon/apple-touch-icon.png
         name: 无涯
         url: /
       # 文章创建日期
@@ -638,7 +638,7 @@ site_footer:
     - img:
       url:
     # or
-    - avatar: http://cdn.inewbie.top/blog-meta/avatar.jpeg
+    - avatar: /images/avatar.jpeg
       url: #http://cdn.inewbie.top/blog-meta/avatar.jpeg
   # site source
   source: https://github.com/volantis-x/volantis-docs/
