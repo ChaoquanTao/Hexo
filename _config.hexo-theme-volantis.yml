@@ -116,7 +116,7 @@ cover:
     others: false # can be written in front-matter 'cover: true'
   #background:  http://cdn.inewbie.top/blog-meta/avatar.jpeg # http://cdn.inewbie.top/blog-meta/background.jpeg # https://gcore.jsdelivr.net/gh/MHG-LAB/cron@gh-pages/bing/bing.jpg
   #background: https://pixabay.com/zh/photos/night-sky-stars-snow-trees-night-7733876 #https://api.dujin.org/bing/1920.php # https://bing.ioliu.cn/v1/rand?w=1920&h=1200
-  logo: /images/avatar.png # http://tva1.sinaimg.cn/large/006ImZ0Ogy1h1u8d5drhbj307f059mxz.jpg# https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/blog/Logo-Cover@3x.png #https://cdn.jsdelivr.net/gh/volantis-x/cdn-org/blog/Logo-Cover@3x.png
+  logo: # 已留空：主页封面只显示标题，不显示头像
   title: 'Tau的博客'
   subtitle: ''
   search: # A Wonderful Theme for Hexo # search bar placeholder
