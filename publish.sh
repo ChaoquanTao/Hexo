@@ -3,7 +3,7 @@
 #
 # 用法:
 #   npm run sync       # 只同步到 source/_posts，不提交（本地 npx hexo server 预览用）
-#   npm run publish    # 同步 + commit + push，触发 Cloudflare 自动部署
+#   npm run publish    # 同步 + 提交推送 vault + 提交推送 Hexo，触发 Cloudflare 自动部署
 #
 # 规则:
 #   - 来源是 vault 顶层的 *.md（vault 为唯一来源，做镜像同步：vault 删了这边也删）
@@ -65,6 +65,24 @@ case "${1:-}" in
     exit 0
     ;;
 esac
+
+# 先提交并推送 vault（内容源头，ChaoquanTao/Blog）。
+# vault 是文章的唯一来源，先把它的改动推上去，再发布 Hexo 站点。
+# 注意：vault 目前没有 .gitignore，这里用 git add -A 会提交全部改动
+#（含 .DS_Store / .obsidian/workspace.json / .omc/ / _wechat.html / 封面图等杂物）。
+if git -C "$VAULT" rev-parse --is-inside-work-tree >/dev/null 2>&1; then
+  vault_branch="$(git -C "$VAULT" rev-parse --abbrev-ref HEAD)"
+  git -C "$VAULT" add -A
+  if git -C "$VAULT" diff --cached --quiet; then
+    echo "vault 无改动，无需提交。"
+  else
+    git -C "$VAULT" commit -m "publish: 同步 vault 内容 ($(date '+%Y-%m-%d %H:%M'))"
+    git -C "$VAULT" push origin "$vault_branch"
+    echo "✓ vault 已推送到 origin/${vault_branch}。"
+  fi
+else
+  echo "⚠ vault ($VAULT) 不是 git 仓库，跳过 vault 提交推送。"
+fi
 
 cd "$HERE"
 # 提交全部站点改动：vault 同步来的文章/图片 + 主题配置、自定义样式/视图等手动改动。
