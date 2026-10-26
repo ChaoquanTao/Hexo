@@ -27,6 +27,12 @@ shopt -s nullglob
 for f in "$VAULT"/*.md; do
   # 只发布带 front matter（首行是 ---）的文章，跳过草稿/笔记
   if IFS= read -r first < "$f" && [ "$first" = "---" ]; then
+    # front matter 里写了 published: false 的文章不发布到博客（如只发公众号的文章）
+    if awk 'NR>1 && /^---[[:space:]]*$/ {exit} NR>1 && /^published:[[:space:]]*false[[:space:]]*$/ {found=1} END {exit !found}' "$f"; then
+      echo "  跳过(published: false): $(basename "$f")"
+      skip=$((skip + 1))
+      continue
+    fi
     base="$(basename "$f")"
     dest="${base#[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]-}"   # 去掉 YYYYMMDD- 前缀
     cp "$f" "$POSTS/$dest"
