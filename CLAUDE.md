@@ -54,4 +54,4 @@ The old **volantis** theme is still vendored in `themes/hexo-theme-volantis/` (w
 
 ## Comments
 
-Comments use **Waline** (`comments.service: waline` in both theme configs). The Waline server is deployed separately on **Vercel + Neon Postgres** (Waline does not support a Cloudflare Workers backend). The blog config only needs `comments.waline.serverURL` pointing at that Vercel URL.
+**Waline** provides post view counts (and comments, which are currently **turned off**: `waline.comment: false` in `themes/singularity/_config.yml`; set it to `true` to bring the comment section back). The Waline server is deployed separately on **Vercel + Neon Postgres** (Waline does not support a Cloudflare Workers backend), and `waline.serverURL` points at it. When comments are off, `main.js` loads only `Waline.pageviewCount`.

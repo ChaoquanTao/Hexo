@@ -40,8 +40,9 @@ links:
 
 since: 2017
 
-# Waline 评论（服务端在 Vercel + Neon）
+# Waline 评论 + 浏览量（服务端在 Vercel + Neon）
 waline:
+  comment: false   # 关闭评论区；文章浏览量仍由 Waline 统计。改成 true 即可重新开启
   serverURL: https://blog-comment-pi-navy.vercel.app
   js: https://unpkg.com/@waline/client@2.15.8/dist/waline.js
   css: https://unpkg.com/@waline/client@2.15.8/dist/waline.css

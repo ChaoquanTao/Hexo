@@ -149,6 +149,16 @@
       new IntersectionObserver(function (es, ob) { if (es[0].isIntersecting) { ob.disconnect(); go(); } }, { rootMargin: '600px' }).observe(wl);
       setTimeout(go, 2500);
     } else go();
+  } else {
+    // 评论区关闭时只统计并显示浏览量
+    var pvs = $$('.waline-pageview-count[data-waline]');
+    if (pvs.length) {
+      var pcfg = JSON.parse(pvs[0].dataset.waline), ppath = decodeURI(location.pathname);
+      pvs.forEach(function (el) { el.dataset.path = ppath; });
+      loadScript(pcfg.js).then(function () {
+        window.Waline.pageviewCount({ serverURL: pcfg.serverURL, path: ppath });
+      }, function () {});
+    }
   }
 
   /* 搜索：/ 打开，读取 hexo-generator-json-content 生成的 content.json */

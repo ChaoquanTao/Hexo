@@ -5,7 +5,7 @@
   <div class="content col">
     <%- page.content %>
   </div>
-  <% if (page.comments !== false && page.path && /^about\//.test(page.path)) { %>
+  <% if (page.comments !== false && theme.waline.comment !== false && page.path && /^about\//.test(page.path)) { %>
   <footer class="pend col"><%- partial('_partial/comments') %></footer>
   <% } %>
 </article>

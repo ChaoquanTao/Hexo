@@ -16,7 +16,7 @@
       <div><dt>发布</dt><dd><time datetime="<%= date_xml(page.date) %>"><%= date(page.date, 'YYYY 年 M 月 D 日') %></time></dd></div>
       <div><dt>阅读</dt><dd><%= minutes %> 分钟</dd></div>
       <% if (cats.length) { %><div><dt>分类</dt><dd><% cats.forEach(function (c) { %><a href="<%- url_for(c.path) %>"><%= c.name %></a><% }) %></dd></div><% } %>
-      <div><dt>浏览</dt><dd><span class="waline-pageview-count" data-path="">–</span> 次</dd></div>
+      <div><dt>浏览</dt><dd><span class="waline-pageview-count" data-path="" data-waline="<%= JSON.stringify({ serverURL: theme.waline.serverURL, js: theme.waline.js }) %>">–</span> 次</dd></div>
     </dl>
   </header>
 
@@ -48,6 +48,6 @@
       <% if (page.next) { %><a href="<%- url_for(page.next.path) %>"><span class="k">较早</span><span class="tt"><%= page.next.title %></span></a><% } %>
       <a href="<%- url_for('/') %>#posts"><span class="k">全部</span><span class="tt">所有文章</span></a>
     </nav>
-    <% if (page.comments !== false) { %><%- partial('_partial/comments') %><% } %>
+    <% if (page.comments !== false && theme.waline.comment !== false) { %><%- partial('_partial/comments') %><% } %>
   </footer>
 </article>
