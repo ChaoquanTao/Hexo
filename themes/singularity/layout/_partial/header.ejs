@@ -1,0 +1,13 @@
+<header class="site">
+  <a class="name" href="<%- url_for('/') %>"><i class="mark" aria-hidden="true"></i><%= config.title %></a>
+  <nav aria-label="站点">
+    <% theme.menu.forEach(function (item) {
+      var href = url_for(item.url);
+      var current = !/#/.test(item.url) && item.url !== '/' && page.path && ('/' + page.path).indexOf(item.url) === 0;
+    %><a href="<%- href %>"<%- current ? ' aria-current="page"' : '' %>><%= item.name %></a><% }) %>
+  </nav>
+  <span class="ctl">
+    <button type="button" class="iconb" id="search-open" aria-label="搜索（快捷键 /）" title="搜索 /"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 5 5"/></svg></button>
+    <button type="button" class="iconb" id="theme-toggle" aria-label="明暗模式：跟随系统" title="明暗模式"><svg viewBox="0 0 24 24" aria-hidden="true"><g class="i-auto"><circle cx="12" cy="12" r="8.5"/><path d="M12 3.5a8.5 8.5 0 0 1 0 17z" class="fill"/></g><g class="i-light"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.3 5.3l1.4 1.4M17.3 17.3l1.4 1.4M5.3 18.7l1.4-1.4M17.3 6.7l1.4-1.4"/></g><g class="i-dark"><path d="M20 14.4A8.6 8.6 0 1 1 9.6 4a6.9 6.9 0 0 0 10.4 10.4z"/></g></svg></button>
+  </span>
+</header>

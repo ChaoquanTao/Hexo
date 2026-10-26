@@ -1,0 +1,9 @@
+<dialog class="search" id="search" aria-label="搜索文章" data-src="<%- url_for('/content.json') %>">
+  <form method="dialog" class="search-bar">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 5 5"/></svg>
+    <input type="search" id="search-q" placeholder="搜索标题与正文…" autocomplete="off" spellcheck="false" aria-label="搜索关键词">
+    <button type="submit" class="esc" aria-label="关闭">ESC</button>
+  </form>
+  <ol class="search-res" id="search-res" aria-live="polite"></ol>
+  <p class="search-hint" id="search-hint">输入关键词开始搜索 · ↑ ↓ 选择 · ↵ 打开</p>
+</dialog>

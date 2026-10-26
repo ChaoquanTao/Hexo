@@ -1,0 +1,14 @@
+<%
+  var all = site.posts.sort('date', -1).toArray();
+  var posts = page.posts ? page.posts.toArray() : all;
+  var heading = '归档';
+  if (page.year) heading = page.year + (page.month ? ' 年 ' + page.month + ' 月' : ' 年');
+%>
+<div class="col list-page">
+  <header class="lhead">
+    <p class="eyebrow">ARCHIVE</p>
+    <h1><%= heading %></h1>
+    <p class="dek">共 <%= posts.length %> 篇<% if (!page.year) { %>，<%= all.length ? all[all.length - 1].date.year() : '' %> 至今<% } %>。</p>
+  </header>
+  <%- partial('_partial/postlist', { posts: posts }) %>
+</div>

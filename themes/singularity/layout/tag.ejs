@@ -1,0 +1,24 @@
+<div class="col list-page">
+<% if (page.tag) { var posts = page.posts.toArray(); %>
+  <header class="lhead">
+    <p class="eyebrow"><a href="<%- url_for('/tags/') %>">TAG</a></p>
+    <h1>#<%= page.tag %></h1>
+    <p class="dek">共 <%= posts.length %> 篇。</p>
+  </header>
+  <%- partial('_partial/postlist', { posts: posts }) %>
+<% } else {
+  var tags = site.tags.sort('name').toArray();
+  var max = tags.reduce(function (m, t) { return Math.max(m, t.length); }, 1);
+%>
+  <header class="lhead">
+    <p class="eyebrow">TAGS</p>
+    <h1>标签</h1>
+    <p class="dek"><%= tags.length %> 个标签。字号越大，文章越多。</p>
+  </header>
+  <ul class="cloud">
+    <% tags.forEach(function (t) { var w = Math.round(Math.sqrt(t.length / max) * 4); %>
+    <li><a href="<%- url_for(t.path) %>" data-w="<%= w %>">#<%= t.name %><sup><%= t.length %></sup></a></li>
+    <% }) %>
+  </ul>
+<% } %>
+</div>

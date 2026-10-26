@@ -22,7 +22,7 @@ npx hexo clean      # delete db.json and public/
 **Articles are NOT written in this repo.** They live in a separate Obsidian vault git repo (`ChaoquanTao/Blog`) at `/Users/tco1wx/blog`. `publish.sh` is a one-way bridge from the vault into Hexo:
 
 - It **mirrors** `*.md` from the vault top level into `source/_posts` — it `rm -f source/_posts/*.md` first, so deleting a post in the vault deletes it here on next sync. Do not hand-edit files in `source/_posts`; changes are wiped on the next sync.
-- Only files whose **first line is `---`** (Hexo front matter) are published; others are skipped as drafts.
+- Only files whose **first line is `---`** (Hexo front matter) are published; others are skipped as drafts. Posts with `published: false` in front matter are also skipped (e.g. WeChat-only articles).
 - A `YYYYMMDD-` filename prefix is stripped to keep URLs clean.
 - Images: `vault/images/` is copied into `source/images/` (additive copy, not a mirror — manually-managed images like the sidebar QR code survive), and `](images/…)` references are rewritten to `](/images/…)` so both Obsidian and the live site resolve them.
 - Override the vault path with `BLOG_VAULT=/other/path npm run publish`.
@@ -33,15 +33,20 @@ Hosted on Cloudflare **Workers** (Workers Builds, *not* Pages), Worker project n
 
 - The `deploy:` block in `_config.yml` (`hexo-deployer-git` → `ChaoquanTao.github.io`) is **legacy GitHub Pages and unused**. Do not run `hexo deploy` / `npm run deploy` for production, and never set Cloudflare's deploy command to `hexo deploy` (it fails with `hexo: not found`).
 
-## Theme: vendored volantis
+## Theme: singularity (custom, active)
 
-The volantis theme is **vendored as real files in `themes/hexo-theme-volantis/`** and must stay that way. Do **not** convert it to an npm dependency or git submodule — under Hexo 7.3 it fails to load from `node_modules` (blank site), and a submodule breaks Cloudflare's clone.
+The active theme is **`themes/singularity/`** (`theme: singularity` in `_config.yml`), a small hand-written EJS theme in a paper/ink reading style modeled on felixrieseberg.com. There's no build step: plain `source/css/main.css` and `source/js/main.js`.
 
-**Theme config is duplicated across two files:** `_config.hexo-theme-volantis.yml` (the active one, since `theme: hexo-theme-volantis` in `_config.yml`) and `_config.volantis.yml` (a kept-in-sync duplicate). When changing theme settings, edit **both** to keep them identical.
+- **Config:** `themes/singularity/_config.yml` (menu, homepage hero text, WeChat QR, Waline, Vercount). Pagination is off (`per_page: 0` in `_config.yml`) because the homepage lists every post grouped by year.
+- **Helpers** live in `themes/singularity/scripts/helpers.js`:
+  - `reading_time` strips svg/pre/figure/mjx before counting.
+  - `strip_title_h1` drops a leading `# 标题` that duplicates the post title.
+  - `singularity_svg` generates the homepage black-hole grid at build time.
+- **Light/dark** is driven by CSS tokens on `:root`, with the dark palette applied both under `prefers-color-scheme` and `[data-theme="dark"]`. The toggle stores the choice in `localStorage.theme`.
+- **Waline** uses `path = decodeURI(location.pathname)`, the same as volantis did, so existing comments and view counts still map. Keep it that way.
+- **Mermaid** is loaded from unpkg in `main.js` only on pages that contain `pre.mermaid`.
 
-**Customize without editing theme source** via convention files under `source/_volantis/` (see `themes/hexo-theme-volantis/scripts/helpers/custom-files.js`):
-- `style.styl` — `@import`ed *after* the theme's own styles, so it overrides defaults (also `first.styl` / `dark.styl` / `darkVar.styl`).
-- View injection points `headBegin/headEnd/header/side/topMeta/bottomMeta/footer/postEnd/bodyBegin/bodyEnd` → `source/_volantis/<point>.ejs`.
+The old **volantis** theme is still vendored in `themes/hexo-theme-volantis/` (with `_config.hexo-theme-volantis.yml` / `_config.volantis.yml` / `source/_volantis/`) for rollback only. Switching back means setting `theme: hexo-theme-volantis` and restoring `per_page: 10`. Never convert a theme to an npm dependency or git submodule: under Hexo 7.3 it fails to load from `node_modules` (blank site), and a submodule breaks Cloudflare's clone.
 
 ## Custom render filter
 

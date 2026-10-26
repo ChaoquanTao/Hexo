@@ -1,0 +1,53 @@
+<%
+  var body = strip_title_h1(page.content, page.title);
+  var minutes = reading_time(body);
+  var cats = page.categories ? page.categories.toArray() : [];
+  var tags = page.tags ? page.tags.toArray() : [];
+  var tocHtml = toc(body, { list_number: false, max_depth: 3 });
+%>
+<div class="strip" id="strip" aria-hidden="true">
+  <div class="in"><a class="back" href="<%- url_for('/') %>#posts" tabindex="-1">◂ 文章</a><span class="ttl"><%= page.title %></span><span class="pct" id="pct">0%</span></div>
+  <div class="bar"><i id="bar"></i></div>
+</div>
+<article class="post">
+  <header class="phead col">
+    <h1><%= page.title %></h1>
+    <dl class="meta">
+      <div><dt>发布</dt><dd><time datetime="<%= date_xml(page.date) %>"><%= date(page.date, 'YYYY 年 M 月 D 日') %></time></dd></div>
+      <div><dt>阅读</dt><dd><%= minutes %> 分钟</dd></div>
+      <% if (cats.length) { %><div><dt>分类</dt><dd><% cats.forEach(function (c) { %><a href="<%- url_for(c.path) %>"><%= c.name %></a><% }) %></dd></div><% } %>
+      <div><dt>浏览</dt><dd><span class="waline-pageview-count" data-path="">–</span> 次</dd></div>
+    </dl>
+  </header>
+
+  <div class="body">
+    <% if (tocHtml) { %>
+    <aside class="toc-rail" aria-label="目录">
+      <div class="rail"><p class="lbl">目录</p><nav id="toc"><%- tocHtml %></nav></div>
+    </aside>
+    <% } %>
+    <div class="content col" id="content">
+      <% if (tocHtml) { %>
+      <details class="toc-inline"><summary>目录</summary><nav><%- tocHtml %></nav></details>
+      <% } %>
+      <%- body %>
+    </div>
+  </div>
+
+  <footer class="pend col">
+    <div class="ende" aria-hidden="true">— 完 —</div>
+    <% if (tags.length) { %>
+    <p class="tags"><span class="lbl">标签</span><% tags.forEach(function (t) { %><a href="<%- url_for(t.path) %>">#<%= t.name %></a><% }) %></p>
+    <% } %>
+    <div class="follow">
+      <img src="<%- url_for(theme.wechat.qrcode) %>" alt="公众号「<%= theme.wechat.name %>」二维码" width="112" height="112" loading="lazy">
+      <p><strong>关注公众号「<%= theme.wechat.name %>」</strong>如果这篇文章对你有帮助，欢迎扫码关注。</p>
+    </div>
+    <nav class="nextprev" aria-label="更多文章">
+      <% if (page.prev) { %><a href="<%- url_for(page.prev.path) %>"><span class="k">较新</span><span class="tt"><%= page.prev.title %></span></a><% } %>
+      <% if (page.next) { %><a href="<%- url_for(page.next.path) %>"><span class="k">较早</span><span class="tt"><%= page.next.title %></span></a><% } %>
+      <a href="<%- url_for('/') %>#posts"><span class="k">全部</span><span class="tt">所有文章</span></a>
+    </nav>
+    <% if (page.comments !== false) { %><%- partial('_partial/comments') %><% } %>
+  </footer>
+</article>

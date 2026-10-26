@@ -1,0 +1,32 @@
+<%
+  var pageTitle = page.title || page.seo_title;
+  if (is_archive()) pageTitle = '归档';
+  if (is_category()) pageTitle = '分类：' + page.category;
+  if (is_tag()) pageTitle = '标签：' + page.tag;
+  var fullTitle = pageTitle ? pageTitle + ' · ' + config.title : config.title;
+  var desc = page.description || (page.excerpt ? strip_html(page.excerpt).slice(0, 150) : '') || (page.content && !is_home() ? strip_html(page.content).replace(/\s+/g, ' ').slice(0, 150) : '') || config.description;
+%>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title><%= fullTitle %></title>
+<meta name="description" content="<%= desc %>">
+<meta name="author" content="<%= config.author %>">
+<link rel="canonical" href="<%= url %>">
+<meta property="og:site_name" content="<%= config.title %>">
+<meta property="og:type" content="<%= is_post() ? 'article' : 'website' %>">
+<meta property="og:title" content="<%= pageTitle || config.title %>">
+<meta property="og:description" content="<%= desc %>">
+<meta property="og:url" content="<%= url %>">
+<meta name="theme-color" content="#f7f5ef" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#12110e" media="(prefers-color-scheme: dark)">
+<% if (config.favicon) { %><link rel="icon" href="<%- url_for(config.favicon) %>"><% } %>
+<script>
+  // 尽早应用用户选过的明暗模式，避免闪烁
+  try { var t = localStorage.getItem('theme'); if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t; } catch (e) {}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Fira+Code:wght@400;500&family=Fira+Sans:ital,wght@0,400;0,500;0,700;1,400&family=Literata:ital,opsz,wght@0,7..72,400..700;1,7..72,400..700&family=Noto+Serif+SC:wght@400;600;700&display=swap" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="<%- url_for('/css/main.css') %>">
+</head>

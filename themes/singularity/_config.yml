@@ -1,0 +1,53 @@
+# singularity：纸张 + 油墨风格的极简 Hexo 主题（参考 felixrieseberg.com 的 lo-fi 版式）
+
+# 顶栏导航
+menu:
+  - name: 文章
+    url: /#posts
+  - name: 归档
+    url: /archives/
+  - name: 分类
+    url: /categories/
+  - name: 标签
+    url: /tags/
+  - name: 关于
+    url: /about/
+
+# 首页开头
+hero:
+  title: 大音希声，大象无形。
+  dek: Tau 的个人博客。早年写 Java 与后端，如今关注 Kubernetes、GPU 与 AI 训练 / 推理基础设施——尽量从第一性原理出发，把复杂的东西讲清楚。
+  more:
+    text: 关于我
+    url: /about/
+
+# 首页文章列表：最近 N 个年份直接展开，更早的折叠在按钮后
+expand_years: 3
+
+# 公众号二维码（文章末尾 + 首页）
+wechat:
+  name: 奇点以内
+  qrcode: /images/qrcode-mp.png
+
+# 首页「在线」一栏
+links:
+  - name: GitHub
+    url: https://github.com/ChaoquanTao
+    note: ChaoquanTao
+  - name: 公众号
+    url: /#follow
+    note: 奇点以内
+
+since: 2017
+
+# Waline 评论（服务端在 Vercel + Neon）
+waline:
+  serverURL: https://blog-comment-pi-navy.vercel.app
+  js: https://unpkg.com/@waline/client@2.15.8/dist/waline.js
+  css: https://unpkg.com/@waline/client@2.15.8/dist/waline.css
+  placeholder: 留下你的足迹吧 ~
+  meta: [nick, mail, link]
+  requiredMeta: [nick]
+
+# 站点 PV/UV（Vercount，兼容不蒜子的元素 id）
+vercount: https://cn.vercount.one/js

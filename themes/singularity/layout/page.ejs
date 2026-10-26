@@ -1,0 +1,11 @@
+<article class="post page">
+  <header class="phead col">
+    <h1><%= page.title || page.seo_title %></h1>
+  </header>
+  <div class="content col">
+    <%- page.content %>
+  </div>
+  <% if (page.comments !== false && page.path && /^about\//.test(page.path)) { %>
+  <footer class="pend col"><%- partial('_partial/comments') %></footer>
+  <% } %>
+</article>

@@ -1,0 +1,11 @@
+<section class="comments" aria-label="评论">
+  <h2 class="lbl">评论</h2>
+  <div id="waline" data-config="<%= JSON.stringify({
+    serverURL: theme.waline.serverURL,
+    placeholder: theme.waline.placeholder,
+    meta: theme.waline.meta,
+    requiredMeta: theme.waline.requiredMeta,
+    js: theme.waline.js,
+    css: theme.waline.css
+  }) %>"><p class="loading">评论加载中…</p></div>
+</section>

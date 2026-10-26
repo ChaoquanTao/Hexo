@@ -1,0 +1,13 @@
+<footer class="pfoot">
+  <div class="pfoot-row">
+    <nav aria-label="页脚"><a href="<%- url_for('/') %>">首页</a><% theme.menu.forEach(function (item) { %><a href="<%- url_for(item.url) %>"><%= item.name %></a><% }) %></nav>
+    <span class="motto"><%= config.description %></span>
+  </div>
+  <div class="pfoot-row small">
+    <span>© <%= theme.since %>–<%= new Date().getFullYear() %> <%= config.author %></span>
+    <span class="stats">
+      <span id="busuanzi_container_site_pv" style="display:none">访问 <span id="busuanzi_value_site_pv">–</span> 次</span>
+      <span id="busuanzi_container_site_uv" style="display:none">访客 <span id="busuanzi_value_site_uv">–</span> 人</span>
+    </span>
+  </div>
+</footer>

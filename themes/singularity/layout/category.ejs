@@ -1,0 +1,21 @@
+<div class="col list-page">
+<% if (page.category) { var posts = page.posts.toArray(); %>
+  <header class="lhead">
+    <p class="eyebrow"><a href="<%- url_for('/categories/') %>">CATEGORY</a></p>
+    <h1><%= page.category %></h1>
+    <p class="dek">共 <%= posts.length %> 篇。</p>
+  </header>
+  <%- partial('_partial/postlist', { posts: posts }) %>
+<% } else { %>
+  <header class="lhead">
+    <p class="eyebrow">CATEGORIES</p>
+    <h1>分类</h1>
+    <p class="dek"><%= site.categories.length %> 个分类，共 <%= site.posts.length %> 篇。</p>
+  </header>
+  <ol class="terms">
+    <% site.categories.sort('length', -1).forEach(function (c) { %>
+    <li><a href="<%- url_for(c.path) %>"><span class="t"><%= c.name %></span><span class="d"><%= c.length %> 篇</span></a></li>
+    <% }) %>
+  </ol>
+<% } %>
+</div>

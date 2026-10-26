@@ -1,0 +1,34 @@
+<% var posts = site.posts.sort('date', -1).toArray(); %>
+<div class="col home">
+  <section class="hero">
+    <h1 class="h-title"><%= theme.hero.title %></h1>
+    <p class="h-dek"><%= theme.hero.dek %></p>
+    <p class="h-more"><a href="<%- url_for(theme.hero.more.url) %>"><%= theme.hero.more.text %></a><span><%= posts.length %> 篇文章 · 始于 <%= posts.length ? posts[posts.length - 1].date.year() : theme.since %></span></p>
+  </section>
+  <figure class="sg-wrap"><%- singularity_svg() %></figure>
+
+  <section id="posts" class="sec">
+    <h2>文章</h2>
+    <%- partial('_partial/postlist', { posts: posts, expandYears: theme.expand_years }) %>
+  </section>
+
+  <section id="topics" class="sec">
+    <h2>主题</h2>
+    <ul class="chips">
+      <% site.categories.sort('length', -1).forEach(function (c) { %>
+      <li><a href="<%- url_for(c.path) %>"><%= c.name %><span><%= c.length %></span></a></li>
+      <% }) %>
+    </ul>
+  </section>
+
+  <section id="online" class="sec">
+    <h2>在线</h2>
+    <% theme.links.forEach(function (l) { %>
+    <div class="item"><a class="t" href="<%- url_for(l.url) %>"><%= l.name %></a><span class="y"><%= l.note %></span></div>
+    <% }) %>
+    <div class="follow" id="follow">
+      <img src="<%- url_for(theme.wechat.qrcode) %>" alt="公众号「<%= theme.wechat.name %>」二维码" width="112" height="112" loading="lazy">
+      <p><strong>关注公众号「<%= theme.wechat.name %>」</strong>微信扫一扫，或搜索「<%= theme.wechat.name %>」。</p>
+    </div>
+  </section>
+</div>

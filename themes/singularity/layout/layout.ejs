@@ -1,0 +1,15 @@
+<!doctype html>
+<html lang="zh-CN">
+<%- partial('_partial/head') %>
+<body data-layout="<%= page.layout || (is_home() ? 'index' : '') %>">
+<a class="skip" href="#main">跳到正文</a>
+<%- partial('_partial/header') %>
+<main id="main">
+<%- body %>
+</main>
+<%- partial('_partial/footer') %>
+<%- partial('_partial/search') %>
+<script src="<%- url_for('/js/main.js') %>" defer></script>
+<% if (theme.vercount) { %><script src="<%- theme.vercount %>" defer></script><% } %>
+</body>
+</html>

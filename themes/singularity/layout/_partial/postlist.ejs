@@ -1,0 +1,21 @@
+<%
+  var groups = group_by_year(posts);
+  var expand = typeof expandYears === 'number' ? expandYears : groups.length;
+%>
+<div class="yrs">
+  <% groups.forEach(function (g, i) { %>
+  <div class="yr"<%- i >= expand ? ' data-older hidden' : '' %>>
+    <span class="y"><%= g.year %></span>
+    <ol class="idx">
+      <% g.posts.forEach(function (post) { %>
+      <li><a href="<%- url_for(post.path) %>"><span class="t"><%= post.title || '(无标题)' %></span><time class="d" datetime="<%= date_xml(post.date) %>"><%= date(post.date, 'MM-DD') %></time></a></li>
+      <% }) %>
+    </ol>
+  </div>
+  <% }) %>
+  <% if (groups.length > expand) {
+    var older = groups.slice(expand).reduce(function (n, g) { return n + g.posts.length; }, 0);
+  %>
+  <p class="older"><button type="button" data-show-older>更早的 <%= older %> 篇（<%= groups[groups.length - 1].year %>–<%= groups[expand].year %>）</button></p>
+  <% } %>
+</div>
