@@ -16,7 +16,7 @@ menu:
 # 首页开头
 hero:
   title: 大音希声，大象无形。
-  dek: Tau 的个人博客。早年写 Java 与后端，如今关注 Kubernetes、GPU 与 AI 训练 / 推理基础设施——尽量从第一性原理出发，把复杂的东西讲清楚。
+  dek: Tau 的个人博客。早年写 Java 和后端，现在主要关注 Kubernetes、GPU 与 AI 训练推理基础设施，记些平时的技术笔记。
   more:
     text: 关于我
     url: /about/

@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="512" height="512">
+  <defs>
+    <radialGradient id="core-glow" cx="50%" cy="50%" r="50%">
+      <stop offset="55%" stop-color="#d9442a" stop-opacity="0.22"/>
+      <stop offset="100%" stop-color="#17160f" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <!-- Obsidian ink tile with subtle rim for dark browser tabs -->
+  <rect x="1" y="1" width="62" height="62" rx="14" fill="#17160f" stroke="#2f2d25" stroke-width="1.5"/>
+  <!-- Soft cinnabar aura -->
+  <circle cx="32" cy="32" r="24" fill="url(#core-glow)"/>
+  <!-- Tilted accretion orbit -->
+  <ellipse cx="32" cy="32" rx="22" ry="7.8" transform="rotate(-24 32 32)" fill="none" stroke="#f7f5ef" stroke-opacity="0.45" stroke-width="1.8"/>
+  <!-- Event horizon + cinnabar photon ring -->
+  <circle cx="32" cy="32" r="12.2" fill="#0d0c09" stroke="#d9442a" stroke-width="3"/>
+  <!-- Inner subtle paper hairline -->
+  <circle cx="32" cy="32" r="8.2" fill="#090806"/>
+  <!-- Orbiting satellite dot in warm rice paper -->
+  <circle cx="51.8" cy="23.2" r="3" fill="#f7f5ef"/>
+</svg>

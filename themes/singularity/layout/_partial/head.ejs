@@ -20,7 +20,9 @@
 <meta property="og:url" content="<%= url %>">
 <meta name="theme-color" content="#f7f5ef" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#12110e" media="(prefers-color-scheme: dark)">
-<% if (config.favicon) { %><link rel="icon" href="<%- url_for(config.favicon) %>"><% } %>
+<link rel="icon" type="image/svg+xml" href="<%- url_for('/images/favicon.svg') %>">
+<% if (config.favicon) { %><link rel="icon" href="<%- url_for(config.favicon) %>" sizes="any"><% } %>
+<link rel="apple-touch-icon" href="<%- url_for('/images/favicon.png') %>">
 <script>
   // 尽早应用用户选过的明暗模式，避免闪烁
   try { var t = localStorage.getItem('theme'); if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t; } catch (e) {}
