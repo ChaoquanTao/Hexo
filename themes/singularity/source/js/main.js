@@ -124,6 +124,91 @@
     }, function () {});
   }
 
+  /* 灯箱：点击 Mermaid 图表或正文图片放大预览 */
+  if (content && typeof HTMLDialogElement !== 'undefined') {
+    var lb = d.createElement('dialog');
+    lb.className = 'lightbox';
+    lb.setAttribute('aria-label', '图片放大预览');
+    lb.innerHTML =
+      '<div class="lb-bar">' +
+        '<span class="lb-title">预览</span>' +
+        '<div class="lb-ctl">' +
+          '<button type="button" data-act="out" aria-label="缩小">−</button>' +
+          '<button type="button" data-act="reset" aria-label="重置缩放">100%</button>' +
+          '<button type="button" data-act="in" aria-label="放大">+</button>' +
+          '<button type="button" data-act="close" aria-label="关闭">ESC</button>' +
+        '</div>' +
+      '</div>' +
+      '<div class="lb-stage"><div class="lb-body"></div></div>';
+    d.body.appendChild(lb);
+
+    var lbBody = $('.lb-body', lb), lbStage = $('.lb-stage', lb), lbTitle = $('.lb-title', lb), lbReset = $('[data-act="reset"]', lb);
+    var baseW = 0, scale = 1, activeEl = null;
+    var applyScale = function (s) {
+      scale = Math.min(4, Math.max(0.4, s));
+      if (activeEl && baseW) {
+        activeEl.style.width = Math.round(baseW * scale) + 'px';
+        activeEl.style.height = 'auto';
+      }
+      lbReset.textContent = Math.round(scale * 100) + '%';
+    };
+    var openLightbox = function (node, natW, title) {
+      lbBody.innerHTML = '';
+      lbBody.appendChild(node);
+      activeEl = node;
+      lbTitle.textContent = title || '预览';
+      lb.showModal();
+      var stageW = Math.max(320, lbStage.clientWidth - 48);
+      baseW = natW > 0 ? natW : stageW;
+      // 宽图默认按 100% 原宽（或至少适配视口宽度）展示，便于清晰阅读细节
+      var initScale = baseW > stageW ? Math.max(1, stageW / baseW) : Math.min(1.5, stageW / baseW);
+      if (baseW > stageW * 1.4) initScale = stageW / baseW;
+      applyScale(initScale);
+      lbStage.scrollTop = 0;
+      lbStage.scrollLeft = 0;
+    };
+
+    lb.addEventListener('click', function (e) {
+      if (e.target === lb) { lb.close(); return; }
+      var btn = e.target.closest('button[data-act]');
+      if (!btn) return;
+      var act = btn.dataset.act;
+      if (act === 'close') lb.close();
+      else if (act === 'in') applyScale(scale * 1.25);
+      else if (act === 'out') applyScale(scale / 1.25);
+      else if (act === 'reset') applyScale(1);
+    });
+    lbStage.addEventListener('wheel', function (e) {
+      if (!e.ctrlKey && !e.metaKey) return;
+      e.preventDefault();
+      applyScale(scale * (e.deltaY < 0 ? 1.15 : 1 / 1.15));
+    }, { passive: false });
+
+    content.addEventListener('click', function (e) {
+      var pre = e.target.closest('pre.mermaid[data-processed]');
+      if (pre) {
+        var svg = $('svg', pre);
+        if (!svg) return;
+        var clone = svg.cloneNode(true);
+        var vb = svg.viewBox && svg.viewBox.baseVal;
+        var natW = (vb && vb.width) ? vb.width : svg.getBoundingClientRect().width;
+        clone.removeAttribute('width');
+        clone.removeAttribute('height');
+        clone.style.maxWidth = 'none';
+        openLightbox(clone, natW, '流程图预览（可点击 +/− 缩放）');
+        return;
+      }
+      var img = e.target.closest('img');
+      if (img && !img.closest('a')) {
+        var imgClone = d.createElement('img');
+        imgClone.src = img.currentSrc || img.src;
+        imgClone.alt = img.alt || '';
+        var w = img.naturalWidth || img.getBoundingClientRect().width;
+        openLightbox(imgClone, w, img.alt || '图片预览');
+      }
+    });
+  }
+
   /* Waline 评论 + 浏览量 */
   var wl = $('#waline');
   if (wl) {

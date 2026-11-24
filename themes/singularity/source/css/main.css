@@ -265,8 +265,26 @@ header.site{position:relative;z-index:11;max-width:var(--wrap);margin:0 auto;dis
 
 /* mermaid */
 .content pre.mermaid{background:none;border:1px solid var(--rule);border-radius:4px;padding:16px;text-align:center;overflow-x:auto;font-family:var(--mono);font-size:12.5px;color:var(--muted);white-space:pre}
-.content pre.mermaid[data-processed]{white-space:normal;color:inherit}
+.content pre.mermaid[data-processed]{white-space:normal;color:inherit;cursor:zoom-in;transition:border-color .15s}
+.content pre.mermaid[data-processed]:hover{border-color:var(--rule-strong)}
 .content pre.mermaid svg{max-width:100%;height:auto}
+.content img:not(a img){cursor:zoom-in}
+
+/* ---------- lightbox ---------- */
+.lightbox{width:min(96vw,1400px);height:92vh;max-width:none;max-height:none;margin:auto;padding:0;border:1px solid var(--rule-strong);border-radius:6px;
+  background:var(--ground);color:var(--ink);box-shadow:0 24px 60px -24px rgba(0,0,0,.45);overflow:hidden}
+.lightbox[open]{display:flex;flex-direction:column}
+.lightbox::backdrop{background:color-mix(in srgb,var(--ground) 70%,transparent);backdrop-filter:blur(4px)}
+.lb-bar{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:8px 14px;border-bottom:1px solid var(--rule);
+  font-family:var(--mono);font-size:11.5px;color:var(--muted);flex:none}
+.lb-ctl{display:flex;align-items:center;gap:6px}
+.lb-bar button{all:unset;cursor:pointer;font-family:var(--mono);font-size:11.5px;letter-spacing:.06em;color:var(--muted);
+  border:1px solid var(--rule);border-radius:3px;padding:2px 8px;line-height:1.5}
+.lb-bar button:hover{color:var(--ink);border-color:var(--rule-strong);background:var(--sheet)}
+.lb-bar button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.lb-stage{flex:1;min-height:0;overflow:auto;display:flex;padding:24px;background:var(--ground)}
+.lb-body{margin:auto;flex:none;transform-origin:top left}
+.lb-body svg,.lb-body img{display:block;max-width:none;height:auto}
 
 /* ---------- post end ---------- */
 .pend{padding-top:10px}
